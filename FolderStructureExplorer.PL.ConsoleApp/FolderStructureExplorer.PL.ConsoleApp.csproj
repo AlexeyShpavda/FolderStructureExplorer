@@ -43,5 +43,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FolderStructureExplorer.BL\FolderStructureExplorer.BL.csproj">
+      <Project>{11F8C04F-57D5-4F91-B4C9-B26F50858F4E}</Project>
+      <Name>FolderStructureExplorer.BL</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

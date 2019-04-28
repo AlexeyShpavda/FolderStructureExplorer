@@ -35,7 +35,14 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DirectoryExplorer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FolderStructureExplorer.BL.Contracts\FolderStructureExplorer.BL.Contracts.csproj">
+      <Project>{17B42290-478F-4647-B153-574B0C7ED52D}</Project>
+      <Name>FolderStructureExplorer.BL.Contracts</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
