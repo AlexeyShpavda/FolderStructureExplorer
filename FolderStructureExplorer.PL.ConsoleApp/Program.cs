@@ -7,14 +7,21 @@ namespace FolderStructureExplorer.PL.ConsoleApp
     {
         private static void Main(string[] args)
         {
-            var directoryExplorer = new DirectoryExplorer();
+            try
+            {
+                var directoryExplorer = new DirectoryExplorer();
 
-            Console.WriteLine("Enter start directory path, please-- > ");
-            var startDirectory = Console.ReadLine();
+                Console.WriteLine("Enter start directory path, please-- > ");
+                var startDirectory = Console.ReadLine();
 
-            directoryExplorer.Explore(startDirectory);
+                directoryExplorer.Explore(startDirectory);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
 
-            Console.ReadKey();
+        Console.ReadKey();
         }
     }
 }

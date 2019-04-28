@@ -9,18 +9,26 @@ namespace FolderStructureExplorer.BL
     {
         public void Explore(string directoryPath)
         {
-            var foundDirectories = Directory.EnumerateDirectories(directoryPath).Select(d => new DirectoryInfo(d));
-
-            foreach (var directory in foundDirectories)
+            try
             {
-                Explore(directory.FullName);
+                var foundDirectories = Directory.EnumerateDirectories(directoryPath).Select(d => new DirectoryInfo(d));
+
+                foreach (var directory in foundDirectories)
+                {
+                    Explore(directory.FullName);
+                }
+
+                var foundFiles = Directory.EnumerateFiles(directoryPath).Select(f => new FileInfo(f));
+
+                foreach (var file in foundFiles)
+                {
+                    Console.WriteLine(file.Name);
+                }
             }
-
-            var foundFiles = Directory.EnumerateFiles(directoryPath).Select(f => new FileInfo(f));
-
-            foreach (var file in foundFiles)
+            catch (DirectoryNotFoundException e)
             {
-                Console.WriteLine(file.Name);
+                // Maybe some logic is being ported here.
+                throw new DirectoryNotFoundException(e.Message);
             }
         }
     }
