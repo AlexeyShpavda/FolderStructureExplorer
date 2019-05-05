@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using FolderStructureExplorer.BL.Contracts;
@@ -7,29 +8,36 @@ namespace FolderStructureExplorer.BL
 {
     public class DirectoryExplorer : IDirectoryExplorer
     {
-        public void Explore(string directoryPath)
+        public IEnumerable<string> Explore(string directoryPath)
         {
-            try
+            var foundFileSystemEntities = new List<string>();
+
+            var researchDirectories = new Queue<string>();
+
+            researchDirectories.Enqueue(directoryPath);
+
+            while (researchDirectories.Any())
             {
-                var foundDirectories = Directory.EnumerateDirectories(directoryPath).Select(d => new DirectoryInfo(d));
+                var currentDirectory = researchDirectories.Dequeue();
+
+                var foundDirectories = Directory.EnumerateDirectories(currentDirectory).Select(d => new DirectoryInfo(d));
 
                 foreach (var directory in foundDirectories)
                 {
-                    Explore(directory.FullName);
+                    foundFileSystemEntities.Add(directory.Name);
+
+                    researchDirectories.Enqueue(directory.FullName);
                 }
 
-                var foundFiles = Directory.EnumerateFiles(directoryPath).Select(f => new FileInfo(f));
+                var foundFiles = Directory.EnumerateFiles(currentDirectory).Select(f => new FileInfo(f));
 
                 foreach (var file in foundFiles)
                 {
-                    Console.WriteLine(file.Name);
+                    foundFileSystemEntities.Add(file.Name);
                 }
             }
-            catch (DirectoryNotFoundException e)
-            {
-                // Maybe some logic is being ported here.
-                throw new DirectoryNotFoundException(e.Message);
-            }
+
+            return foundFileSystemEntities;
         }
     }
 }

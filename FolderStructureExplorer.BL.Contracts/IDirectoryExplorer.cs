@@ -1,7 +1,9 @@
-﻿namespace FolderStructureExplorer.BL.Contracts
+﻿using System.Collections.Generic;
+
+namespace FolderStructureExplorer.BL.Contracts
 {
     public interface IDirectoryExplorer
     {
-        void Explore(string directoryPath);
+        IEnumerable<string> Explore(string directoryPath);
     }
 }
