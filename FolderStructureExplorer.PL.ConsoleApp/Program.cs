@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using FolderStructureExplorer.BL;
 
 namespace FolderStructureExplorer.PL.ConsoleApp
@@ -7,21 +8,27 @@ namespace FolderStructureExplorer.PL.ConsoleApp
     {
         private static void Main(string[] args)
         {
+            Console.OutputEncoding = Encoding.UTF8;
+
             try
             {
                 var directoryExplorer = new DirectoryExplorer();
 
                 Console.WriteLine("Enter start directory path, please-- > ");
-                var startDirectory = Console.ReadLine();
+                //var startDirectory = Console.ReadLine();
+                const string startDirectory = @"D:\AAA";
 
-                directoryExplorer.Explore(startDirectory);
+                foreach (var entity in directoryExplorer.Explore(startDirectory))
+                {
+                    Console.WriteLine(entity);
+                }
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
             }
 
-        Console.ReadKey();
+            Console.ReadKey();
         }
     }
 }
