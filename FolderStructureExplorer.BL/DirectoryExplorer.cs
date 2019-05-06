@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using FolderStructureExplorer.BL.Contracts;
+using FolderStructureExplorer.BL.Contracts.Interfaces;
 
 namespace FolderStructureExplorer.BL
 {
@@ -10,8 +10,6 @@ namespace FolderStructureExplorer.BL
     {
         public IEnumerable<string> Explore(string directoryPath)
         {
-            var foundFileSystemEntities = new List<string>();
-
             var researchDirectories = new Queue<string>();
 
             researchDirectories.Enqueue(directoryPath);
@@ -24,7 +22,7 @@ namespace FolderStructureExplorer.BL
 
                 foreach (var directory in foundDirectories)
                 {
-                    foundFileSystemEntities.Add(directory.Name);
+                    yield return directory.Name;
 
                     researchDirectories.Enqueue(directory.FullName);
                 }
@@ -33,11 +31,9 @@ namespace FolderStructureExplorer.BL
 
                 foreach (var file in foundFiles)
                 {
-                    foundFileSystemEntities.Add(file.Name);
+                    yield return file.Name;
                 }
             }
-
-            return foundFileSystemEntities;
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace FolderStructureExplorer.BL.Contracts
+namespace FolderStructureExplorer.BL.Contracts.Interfaces
 {
     public interface IDirectoryExplorer
     {
