@@ -36,11 +36,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Enums\FurtherAction.cs" />
+    <Compile Include="EventsArgs\DirectoryEventArgs.cs" />
+    <Compile Include="EventsArgs\FileEventArgs.cs" />
+    <Compile Include="EventsArgs\FurtherActionEventArgs.cs" />
     <Compile Include="Interfaces\IDirectoryExplorer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="EventsArgs\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
