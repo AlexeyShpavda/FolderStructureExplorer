@@ -27,8 +27,25 @@ namespace FolderStructureExplorer.BL
         public event EventHandler<DirectoryEventArgs> NotifyThatDirectoryNotFiltered;
         #endregion
 
+        private Predicate<FileInfo> FilePredicate { get; }
+
+        private Predicate<DirectoryInfo> DirectoryPredicate { get; }
+
+        public DirectoryExplorer(
+            Predicate<FileInfo> filePredicate = null,
+            Predicate<DirectoryInfo> directoryPredicate = null)
+        {
+            FilePredicate = filePredicate;
+            DirectoryPredicate = directoryPredicate;
+        }
+
         public IEnumerable<string> Explore(string directoryPath)
         {
+            OnNotifyAboutStartingOfExplore(new DirectoryEventArgs
+            {
+                DirectoryInfo = new DirectoryInfo(directoryPath)
+            });
+
             var researchDirectories = new Queue<string>();
 
             researchDirectories.Enqueue(directoryPath);
@@ -41,6 +58,18 @@ namespace FolderStructureExplorer.BL
 
                 foreach (var directory in foundDirectories)
                 {
+                    var directoryEventArgs = new DirectoryEventArgs { DirectoryInfo = directory };
+
+                    OnNotifyThatDirectoryWasFounded(directoryEventArgs);
+
+                    if (DirectoryPredicate != null && !DirectoryPredicate(directory))
+                    {
+                        OnNotifyThatDirectoryNotFiltered(directoryEventArgs);
+                        continue;
+                    }
+
+                    OnNotifyThatDirectoryPassedFilteringSuccessfully(directoryEventArgs);
+
                     yield return directory.Name;
 
                     researchDirectories.Enqueue(directory.FullName);
@@ -50,9 +79,26 @@ namespace FolderStructureExplorer.BL
 
                 foreach (var file in foundFiles)
                 {
+                    var fileEventArgs = new FileEventArgs {FileInfo = file};
+
+                    OnNotifyThatFileWasFounded(fileEventArgs);
+
+                    if (FilePredicate != null && !FilePredicate(file))
+                    {
+                        OnNotifyThatFileNotFiltered(fileEventArgs);
+                        continue;
+                    }
+
+                    OnNotifyThatFilePassedFilteringSuccessfully(fileEventArgs);
+
                     yield return file.Name;
                 }
             }
+
+            OnNotifyAboutFinishingOfExplore(new DirectoryEventArgs
+            {
+                DirectoryInfo = new DirectoryInfo(directoryPath)
+            });
         }
 
         #region OnEvents
