@@ -37,6 +37,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Notification.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -44,6 +45,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\FolderStructureExplorer.BL.Contracts\FolderStructureExplorer.BL.Contracts.csproj">
+      <Project>{17B42290-478F-4647-B153-574B0C7ED52D}</Project>
+      <Name>FolderStructureExplorer.BL.Contracts</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FolderStructureExplorer.BL\FolderStructureExplorer.BL.csproj">
       <Project>{11F8C04F-57D5-4F91-B4C9-B26F50858F4E}</Project>
       <Name>FolderStructureExplorer.BL</Name>

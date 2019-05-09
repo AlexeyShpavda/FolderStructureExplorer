@@ -14,6 +14,10 @@ namespace FolderStructureExplorer.PL.ConsoleApp
             {
                 var directoryExplorer = new DirectoryExplorer();
 
+                var notification = new Notification(directoryExplorer);
+
+                notification.SubscribeToEvents();
+
                 Console.WriteLine("Enter start directory path, please-- > ");
                 //var startDirectory = Console.ReadLine();
                 const string startDirectory = @"D:\AAA";
