@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using FolderStructureExplorer.BL.Contracts.Enums;
 using FolderStructureExplorer.BL.Contracts.EventsArgs;
 using FolderStructureExplorer.BL.Contracts.Interfaces;
 
@@ -70,6 +71,14 @@ namespace FolderStructureExplorer.BL
 
                     OnNotifyThatDirectoryPassedFilteringSuccessfully(directoryEventArgs);
 
+                    switch (directoryEventArgs.FurtherAction)
+                    {
+                        case FurtherAction.Skip:
+                            continue;
+                        case FurtherAction.Stop:
+                            yield break;
+                    }
+
                     yield return directory.Name;
 
                     researchDirectories.Enqueue(directory.FullName);
@@ -90,6 +99,14 @@ namespace FolderStructureExplorer.BL
                     }
 
                     OnNotifyThatFilePassedFilteringSuccessfully(fileEventArgs);
+
+                    switch (fileEventArgs.FurtherAction)
+                    {
+                        case FurtherAction.Skip:
+                            continue;
+                        case FurtherAction.Stop:
+                            yield break;
+                    }
 
                     yield return file.Name;
                 }
