@@ -19,8 +19,7 @@ namespace FolderStructureExplorer.PL.ConsoleApp
                 notification.SubscribeToEvents();
 
                 Console.WriteLine("Enter start directory path, please-- > ");
-                //var startDirectory = Console.ReadLine();
-                const string startDirectory = @"D:\1";
+                var startDirectory = Console.ReadLine();
 
                 foreach (var entity in directoryExplorer.Explore(startDirectory))
                 {
